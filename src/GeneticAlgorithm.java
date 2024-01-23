@@ -19,32 +19,24 @@ public class GeneticAlgorithm {
         //Sort Population
         sortPopulation(population);
         //Output best in the current generation
-        System.out.println("Generation 1 "+EvaluationFunction.getDecimal(population.get(0).alleles()) +"---"+ population.get(0).fittness());
+        System.out.println("Generation 1 "+EvaluationFunction.getDecimal(population.get(0).alleles()) +" --- "+ population.get(0).fittness());
         genBest.add(population.get(0).fittness());
         //Start generations
         for (int gen = 2; gen<=no_Gen; gen++){
-//            population.forEach(x-> System.out.print(x.alleles()+"-"+x.fittness()+" "));
-//            System.out.println();
             //elitism
             newPopulation=new ArrayList<>(elitism(population));
-//            System.out.println("After elitism " + newPopulation.size()+"+++"+population.size());
             //tournament selection
             ArrayList<Individual> tempPopulation = new ArrayList<>(tournamentSelect(population));
             //Uniform Crossover and Mutation and Fitness Evaluation
             uniforCrossoverMutation(tempPopulation, cross_rate, mut_rate);
             //update population
-//            for (int i=0; i<population.size(); i++){
-//                population.set(i,newPopulation.get(i));
-//            }
+
             population = new ArrayList<>(newPopulation);
             //Sort Population
             sortPopulation(population);
-//            population.forEach(x-> System.out.print(x.alleles()+"-"+x.fittness()+" "));
-//            System.out.println();
-//            newPopulation.forEach(x-> System.out.print(x.alleles()+"-"+x.fittness()+" "));
-//            System.out.println();
+
             //Output best in the current generation
-            System.out.println("Generation "+gen+" "+EvaluationFunction.getDecimal(population.get(0).alleles()) +"---"+ population.get(0).fittness());
+            System.out.println("Generation "+gen+" "+EvaluationFunction.getDecimal(population.get(0).alleles()) +" --- "+ population.get(0).fittness());
             genBest.add(population.get(0).fittness());
         }
         return genBest;
@@ -106,8 +98,6 @@ public class GeneticAlgorithm {
                     break;
                 check++;
             }
-//            perfroms crossover
-//            System.out.println("First: "+c1+"----"+c2);
             char c;
             if(Math.random()<rate){
                 for(int bit=0; bit<c1.length(); bit++)
@@ -115,13 +105,9 @@ public class GeneticAlgorithm {
                     if(Math.random()<0.5){
                         c=c1.charAt(bit);
                         c1.setCharAt(bit,c2.charAt(bit));
-//                        System.out.println("Pre c2 "+c2);
                         c2.setCharAt(bit,c);
-//                        System.out.println("Post c2 "+c2+"---> "+c1.charAt(bit)+" position "+ bit);
                     }
                 }
-//                System.out.println("Second: "+c1+"----"+c2);
-//                System.exit(0);
             }
             //performs mutation
             Mutation(c1,mutationRate);
@@ -139,7 +125,7 @@ public class GeneticAlgorithm {
         }
 
     }
-
+    //Check if two chromosomes are the same
         private boolean sameIndividual(StringBuilder c1, StringBuilder c2) {
         for (int ch = 0; ch < c1.length(); ch++) {
             if (c1.charAt(ch)!=c2.charAt(ch))
@@ -147,6 +133,7 @@ public class GeneticAlgorithm {
         }
         return true;
     }
+    //Mutation
     private void Mutation(StringBuilder c, double rate) {
         if(Math.random()<rate){
             for(int bit =0; bit<c.length(); bit++)
